@@ -1,3 +1,4 @@
+#include "grid.h"
 #include <raylib.h>
 
 int main() {
@@ -7,9 +8,13 @@ int main() {
   InitWindow(screenW, screenH, "Tetoriss~");
   SetTargetFPS(45);
 
+  Grid grid = Grid();
+  grid.Print();
+
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(darkBlue);
+    grid.Draw();
 
     EndDrawing();
   }
