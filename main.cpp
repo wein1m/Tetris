@@ -1,3 +1,4 @@
+#include "blocks.cpp"
 #include "grid.h"
 #include <raylib.h>
 
@@ -9,13 +10,16 @@ int main() {
   SetTargetFPS(45);
 
   Grid grid = Grid();
+  grid.grid[0][4] = 3;
   grid.Print();
+
+  LBlock block = LBlock();
 
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(darkBlue);
     grid.Draw();
-
+    block.Draw();
     EndDrawing();
   }
 
