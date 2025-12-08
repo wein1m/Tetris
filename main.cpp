@@ -10,16 +10,15 @@ int main() {
   SetTargetFPS(45);
 
   Grid grid = Grid();
-  grid.grid[0][4] = 3;
   grid.Print();
 
-  LBlock block = LBlock();
+  ZBlock block1 = ZBlock();
 
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(darkBlue);
     grid.Draw();
-    block.Draw();
+    block1.Draw();
     EndDrawing();
   }
 
