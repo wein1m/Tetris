@@ -7,6 +7,8 @@ Game::Game() {
   blocks = GetAllBlocks();
   currBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
+  state = PLAYING;
+  spawnDelayStart = 0.0;
 }
 
 // make sure every blocks appeared exactly once in every round
@@ -66,6 +68,7 @@ void Game::MoveDown() {
   currBlock.Move(1, 0);
   if (IsBlockOutside()) {
     currBlock.Move(-1, 0);
+    LockBlock();
   }
 }
 
@@ -85,4 +88,19 @@ void Game::RotateBlock() {
   if (IsBlockOutside()) {
     currBlock.UndoRotate();
   }
+}
+
+void Game::LockBlock() {
+  std::vector<Position> tiles = currBlock.GetCellPosition();
+
+  for (Position item : tiles) {
+    grid.grid[item.row][item.col] = currBlock.id;
+  }
+
+  currBlock = nextBlock;
+  nextBlock = GetRandomBlock();
+
+  spawnDelayStart = GetTime();
+  state = SPAWN_DELAY;
+  std::cout << "state: " << state << std::endl;
 }

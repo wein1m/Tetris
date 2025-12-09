@@ -8,15 +8,20 @@ public:
   Grid grid;
   Block GetRandomBlock();
   void Draw();
+  std::vector<Block> GetAllBlocks();
   void HandleInput();
   void MoveLeft();
   void MoveRight();
   void MoveDown();
-  std::vector<Block> GetAllBlocks();
+  double spawnDelayStart;
+  enum GameState { PLAYING, SPAWN_DELAY };
+
+  GameState state;
 
 private:
   bool IsBlockOutside();
   void RotateBlock();
+  void LockBlock();
   std::vector<Block> blocks;
   Block currBlock;
   Block nextBlock;
