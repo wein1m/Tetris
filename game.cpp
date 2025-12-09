@@ -1,4 +1,5 @@
 #include "game.h"
+#include <iostream>
 #include <random>
 
 Game::Game() {
@@ -28,4 +29,49 @@ std::vector<Block> Game::GetAllBlocks() {
 void Game::Draw() {
   grid.Draw();
   currBlock.Draw();
+}
+
+void Game::HandleInput() {
+  int keyPressed = GetKeyPressed();
+
+  switch (keyPressed) {
+  case KEY_LEFT:
+    MoveLeft();
+    break;
+  case KEY_RIGHT:
+    MoveRight();
+    break;
+  case KEY_DOWN:
+    MoveDown();
+    break;
+  }
+}
+
+void Game::MoveLeft() {
+  currBlock.Move(0, -1);
+  if (IsBlockOutside()) {
+    currBlock.Move(0, 1);
+  }
+}
+void Game::MoveRight() {
+  currBlock.Move(0, 1);
+  if (IsBlockOutside()) {
+    currBlock.Move(0, -1);
+  }
+}
+void Game::MoveDown() {
+  currBlock.Move(1, 0);
+  if (IsBlockOutside()) {
+    currBlock.Move(-1, 0);
+  }
+}
+
+bool Game::IsBlockOutside() {
+  std::vector<Position> tiles = currBlock.GetCellPosition();
+  for (Position item : tiles) {
+    if (grid.IsCellOutside(item.row, item.col)) {
+      return true;
+    }
+  }
+  return false;
 }

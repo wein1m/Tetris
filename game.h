@@ -8,9 +8,14 @@ public:
   Grid grid;
   Block GetRandomBlock();
   void Draw();
+  void HandleInput();
+  void MoveLeft();
+  void MoveRight();
+  void MoveDown();
   std::vector<Block> GetAllBlocks();
 
 private:
+  bool IsBlockOutside();
   std::vector<Block> blocks;
   Block currBlock;
   Block nextBlock;
