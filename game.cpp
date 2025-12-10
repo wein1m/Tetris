@@ -54,21 +54,29 @@ void Game::HandleInput() {
 
 void Game::MoveLeft() {
   currBlock.Move(0, -1);
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || !IsBlockFits()) {
     currBlock.Move(0, 1);
   }
 }
 void Game::MoveRight() {
   currBlock.Move(0, 1);
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || !IsBlockFits()) {
     currBlock.Move(0, -1);
   }
 }
 void Game::MoveDown() {
   currBlock.Move(1, 0);
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || !IsBlockFits()) {
     currBlock.Move(-1, 0);
     LockBlock();
+  }
+}
+
+void Game::RotateBlock() {
+  currBlock.Rotate();
+  // prevent future rotation to be outside
+  if (IsBlockOutside() || !IsBlockFits()) {
+    currBlock.UndoRotate();
   }
 }
 
@@ -80,14 +88,6 @@ bool Game::IsBlockOutside() {
     }
   }
   return false;
-}
-
-void Game::RotateBlock() {
-  currBlock.Rotate();
-  // prevent future rotation to be outside
-  if (IsBlockOutside()) {
-    currBlock.UndoRotate();
-  }
 }
 
 void Game::LockBlock() {
@@ -102,5 +102,14 @@ void Game::LockBlock() {
 
   spawnDelayStart = GetTime();
   state = SPAWN_DELAY;
-  std::cout << "state: " << state << std::endl;
+}
+
+bool Game::IsBlockFits() {
+  std::vector<Position> tiles = currBlock.GetCellPosition();
+  for (Position item : tiles) {
+    if (!grid.IsCellEmpty(item.row, item.col)) {
+      return false;
+    }
+  }
+  return true;
 }
