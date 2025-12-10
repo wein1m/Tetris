@@ -27,7 +27,7 @@ int main() {
   while (!WindowShouldClose()) {
     // delay when switching to next block (after prev block hit bottom)
     if (game.state == Game::SPAWN_DELAY) {
-      if (GetTime() - game.spawnDelayStart >= 0.6) {
+      if (GetTime() - game.spawnDelayStart >= 0.5) {
         game.state = Game::PLAYING;
       } else {
         continue;

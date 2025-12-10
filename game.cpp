@@ -99,6 +99,7 @@ void Game::LockBlock() {
 
   currBlock = nextBlock;
   nextBlock = GetRandomBlock();
+  grid.ClearFullRows();
 
   spawnDelayStart = GetTime();
   state = SPAWN_DELAY;
