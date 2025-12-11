@@ -32,7 +32,7 @@ void Grid::Draw() {
     for (int col = 0; col < numCols; col++) {
       int cellValue = grid[row][col];
       // +1 for margin, -1 to keep  the size the same (cuz we add 1 for margin)
-      DrawRectangle(col * cellSize + 1, row * cellSize + 1, cellSize - 1,
+      DrawRectangle(col * cellSize + 11, row * cellSize + 11, cellSize - 1,
                     cellSize - 1, colors[cellValue]);
     }
   }

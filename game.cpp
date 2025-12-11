@@ -37,6 +37,12 @@ void Game::Draw() {
 void Game::HandleInput() {
   int keyPressed = GetKeyPressed();
 
+  if (gameOver && keyPressed) {
+    std::cout << "CONGRATS~! YOU'VE BEEN REINCARNATED~~" << std::endl;
+    gameOver = false;
+    Reset();
+  }
+
   switch (keyPressed) {
   case KEY_LEFT:
     MoveLeft();
@@ -129,4 +135,11 @@ bool Game::IsBlockFits() {
     }
   }
   return true;
+}
+
+void Game::Reset() {
+  grid.Initialize();
+  blocks = GetAllBlocks();
+  currBlock = GetRandomBlock();
+  nextBlock = GetRandomBlock();
 }

@@ -1,3 +1,4 @@
+#include "colors.h"
 #include "game.h"
 #include <cstdlib>
 #include <ctime>
@@ -17,11 +18,12 @@ bool EventTriggered(double interval) {
 int main() {
   // generate random seed to ensure rand() is random on every run
   std::srand((unsigned int)std::time(nullptr));
-  Color darkBlue = {44, 44, 127, 255};
-  int screenW = 300;
-  int screenH = 600;
+  int screenW = 500;
+  int screenH = 620;
   InitWindow(screenW, screenH, "Tetoriss~");
   SetTargetFPS(45);
+
+  Font fontMonogram = LoadFontEx("font/monogram.ttf", 64, 0, 0);
 
   Game game = Game();
   Grid grid = Grid();
@@ -39,7 +41,18 @@ int main() {
     BeginDrawing();
     ClearBackground(darkBlue);
 
-    if (game.state == Game::PLAYING && !game.gameOver) {
+    DrawTextEx(fontMonogram, "SCORE", {355, 15}, 38, 2, WHITE);
+    DrawRectangleRounded({320, 55, 170, 60}, 0.3f, 6, lightBlue);
+
+    DrawTextEx(fontMonogram, "NEXT", {365, 175}, 38, 2, WHITE);
+    DrawRectangleRounded({320, 215, 170, 180}, 0.15f, 6, lightBlue);
+
+    if (game.gameOver) {
+      DrawTextEx(fontMonogram, "GAME", {360, 450}, 44, 2, RED);
+      DrawTextEx(fontMonogram, "OVER", {360, 485}, 44, 2, RED);
+    }
+
+    if (game.state == Game::PLAYING) {
       game.HandleInput();
       if (EventTriggered(0.2)) {
         game.MoveDown();
