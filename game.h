@@ -14,9 +14,10 @@ public:
   void MoveRight();
   void MoveDown();
   double spawnDelayStart;
-  enum GameState { PLAYING, SPAWN_DELAY };
-
+  // TODO: implement GAME_OVER state instead of gameOver bool
+  enum GameState { PLAYING, SPAWN_DELAY, GAME_OVER };
   GameState state;
+  bool gameOver;
 
 private:
   bool IsBlockOutside();

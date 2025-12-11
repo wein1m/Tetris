@@ -1,6 +1,7 @@
 #include "game.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 #include <raylib.h>
 
 double lastUpdateTime = 0;
@@ -23,6 +24,7 @@ int main() {
   SetTargetFPS(45);
 
   Game game = Game();
+  Grid grid = Grid();
 
   while (!WindowShouldClose()) {
     // delay when switching to next block (after prev block hit bottom)
@@ -37,7 +39,7 @@ int main() {
     BeginDrawing();
     ClearBackground(darkBlue);
 
-    if (game.state == Game::PLAYING) {
+    if (game.state == Game::PLAYING && !game.gameOver) {
       game.HandleInput();
       if (EventTriggered(0.2)) {
         game.MoveDown();

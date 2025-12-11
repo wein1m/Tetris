@@ -8,6 +8,7 @@ Game::Game() {
   currBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
   state = PLAYING;
+  gameOver = false;
   spawnDelayStart = 0.0;
 }
 
@@ -53,30 +54,38 @@ void Game::HandleInput() {
 }
 
 void Game::MoveLeft() {
-  currBlock.Move(0, -1);
-  if (IsBlockOutside() || !IsBlockFits()) {
-    currBlock.Move(0, 1);
+  if (!gameOver && IsBlockFits()) {
+    currBlock.Move(0, -1);
+    if (IsBlockOutside() || !IsBlockFits()) {
+      currBlock.Move(0, 1);
+    }
   }
 }
 void Game::MoveRight() {
-  currBlock.Move(0, 1);
-  if (IsBlockOutside() || !IsBlockFits()) {
-    currBlock.Move(0, -1);
+  if (!gameOver && IsBlockFits()) {
+    currBlock.Move(0, 1);
+    if (IsBlockOutside() || !IsBlockFits()) {
+      currBlock.Move(0, -1);
+    }
   }
 }
 void Game::MoveDown() {
-  currBlock.Move(1, 0);
-  if (IsBlockOutside() || !IsBlockFits()) {
-    currBlock.Move(-1, 0);
-    LockBlock();
+  if (!gameOver && IsBlockFits()) {
+    currBlock.Move(1, 0);
+    if (IsBlockOutside() || !IsBlockFits()) {
+      currBlock.Move(-1, 0);
+      LockBlock();
+    }
   }
 }
 
 void Game::RotateBlock() {
-  currBlock.Rotate();
-  // prevent future rotation to be outside
-  if (IsBlockOutside() || !IsBlockFits()) {
-    currBlock.UndoRotate();
+  if (!gameOver && IsBlockFits()) {
+    currBlock.Rotate();
+    // prevent future rotation to be outside
+    if (IsBlockOutside() || !IsBlockFits()) {
+      currBlock.UndoRotate();
+    }
   }
 }
 
@@ -98,8 +107,15 @@ void Game::LockBlock() {
   }
 
   currBlock = nextBlock;
-  nextBlock = GetRandomBlock();
-  grid.ClearFullRows();
+  if (!IsBlockFits()) {
+    gameOver = true;
+    std::cout << "GAME OVER~" << std::endl;
+  }
+
+  if (!gameOver && IsBlockFits()) {
+    nextBlock = GetRandomBlock();
+    grid.ClearFullRows();
+  }
 
   spawnDelayStart = GetTime();
   state = SPAWN_DELAY;
