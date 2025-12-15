@@ -4,6 +4,7 @@
 #include <ctime>
 #include <iostream>
 #include <raylib.h>
+#include <string>
 
 double lastUpdateTime = 0;
 
@@ -41,9 +42,14 @@ int main() {
     BeginDrawing();
     ClearBackground(darkBlue);
 
+    std::string score = std::to_string(game.score);
+
+    // ===== SCORE ======
     DrawTextEx(fontMonogram, "SCORE", {355, 15}, 38, 2, WHITE);
     DrawRectangleRounded({320, 55, 170, 60}, 0.3f, 6, lightBlue);
+    DrawTextEx(fontMonogram, score.c_str(), {375, 65}, 38, 2, WHITE);
 
+    // ===== NEXT BLOCK ======
     DrawTextEx(fontMonogram, "NEXT", {365, 175}, 38, 2, WHITE);
     DrawRectangleRounded({320, 215, 170, 180}, 0.15f, 6, lightBlue);
 

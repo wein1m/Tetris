@@ -10,6 +10,8 @@ Game::Game() {
   state = PLAYING;
   gameOver = false;
   spawnDelayStart = 0.0;
+  score = 0;
+  points = 20;
 }
 
 // make sure every blocks appeared exactly once in every round
@@ -120,7 +122,12 @@ void Game::LockBlock() {
 
   if (!gameOver && IsBlockFits()) {
     nextBlock = GetRandomBlock();
-    grid.ClearFullRows();
+
+    int completed = grid.ClearFullRows();
+    if (completed > 0) {
+      int temp_points = points * completed;
+      score += temp_points;
+    }
   }
 
   spawnDelayStart = GetTime();

@@ -18,6 +18,8 @@ public:
   enum GameState { PLAYING, SPAWN_DELAY, GAME_OVER };
   GameState state;
   bool gameOver;
+  int score;
+  Block nextBlock;
 
 private:
   bool IsBlockOutside();
@@ -27,5 +29,5 @@ private:
   bool IsBlockFits();
   std::vector<Block> blocks;
   Block currBlock;
-  Block nextBlock;
+  int points;
 };
