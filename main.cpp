@@ -43,11 +43,13 @@ int main() {
     ClearBackground(darkBlue);
 
     std::string score = std::to_string(game.score);
+    Vector2 scoreTextSize = MeasureTextEx(fontMonogram, score.c_str(), 38, 2);
+    Vector2 scoreCenter = {320 + (170 - scoreTextSize.x) / 2, 65};
 
     // ===== SCORE ======
     DrawTextEx(fontMonogram, "SCORE", {355, 15}, 38, 2, WHITE);
     DrawRectangleRounded({320, 55, 170, 60}, 0.3f, 6, lightBlue);
-    DrawTextEx(fontMonogram, score.c_str(), {375, 65}, 38, 2, WHITE);
+    DrawTextEx(fontMonogram, score.c_str(), scoreCenter, 38, 2, WHITE);
 
     // ===== NEXT BLOCK ======
     DrawTextEx(fontMonogram, "NEXT", {365, 175}, 38, 2, WHITE);

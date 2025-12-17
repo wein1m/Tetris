@@ -33,7 +33,8 @@ std::vector<Block> Game::GetAllBlocks() {
 
 void Game::Draw() {
   grid.Draw();
-  currBlock.Draw();
+  currBlock.Draw(11, 11);
+  nextBlock.Draw(260, 260);
 }
 
 void Game::HandleInput() {
